@@ -7,10 +7,15 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { customerInfo, orderItems } = body;
 
+    // Log environment variables to ensure they are loaded correctly
+    console.log('SMTP_USER:', process.env.SMTP_USER);
+    console.log('SMTP_PASSWORD:', process.env.SMTP_PASSWORD);
+    console.log('ADMIN_EMAIL:', process.env.ADMIN_EMAIL);
+
     // Create transporter with Gmail-specific settings
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT as string, 10),
       secure: true, // Use SSL/TLS
       auth: {
         user: process.env.SMTP_USER,
@@ -33,7 +38,7 @@ export async function POST(request: Request) {
         Phone: ${customerInfo.phone}<br>
         Address: ${customerInfo.address}
       </p>
-      
+
       <h3>Order Items:</h3>
       ${orderItems.map((item: any) => `
         <div style="margin-bottom: 10px;">
@@ -45,8 +50,8 @@ export async function POST(request: Request) {
           </p>
         </div>
       `).join('')}
-      
-      <h3>Total Amount: ${orderItems.reduce((acc: number, item: any) => 
+
+      <h3>Total Amount: ${orderItems.reduce((acc: number, item: any) =>
         acc + (item.price * item.quantity), 0)} MAD</h3>
     `;
 
@@ -62,10 +67,10 @@ export async function POST(request: Request) {
 
     const info = await transporter.sendMail(mailOptions);
     console.log('Message sent: %s', info.messageId);
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       message: 'Order placed successfully',
-      orderId: info.messageId 
+      orderId: info.messageId
     });
 
   } catch (error: any) {
