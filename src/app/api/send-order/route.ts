@@ -7,16 +7,23 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { customerInfo, orderItems } = body;
 
-    // Create Gmail-specific transporter
+    // Create transporter with Gmail-specific settings
     const transporter = nodemailer.createTransport({
-      service: 'gmail',  // Use 'gmail' service instead of manual host/port
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true, // Use SSL/TLS
       auth: {
         user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD
+        pass: process.env.SMTP_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false // Accept self-signed certs
       }
     });
 
-    // Format the email content
+    // Verify connection configuration
+    await transporter.verify();
+
     const htmlContent = `
       <h2>New Order Details</h2>
       <h3>Customer Information:</h3>
@@ -43,27 +50,23 @@ export async function POST(request: Request) {
         acc + (item.price * item.quantity), 0)} MAD</h3>
     `;
 
-    try {
-      const info = await transporter.sendMail({
-        from: process.env.SMTP_USER,
-        to: process.env.ADMIN_EMAIL,
-        subject: 'New Order Received',
-        html: htmlContent,
-      });
+    const mailOptions = {
+      from: {
+        name: 'Your Store Name',
+        address: process.env.SMTP_USER as string
+      },
+      to: process.env.ADMIN_EMAIL,
+      subject: 'New Order Received',
+      html: htmlContent,
+    };
 
-      console.log('Message sent: %s', info.messageId);
-      return NextResponse.json({ 
-        message: 'Order placed successfully',
-        orderId: info.messageId 
-      });
-      
-    } catch (emailError: any) {
-      console.error('Email error:', emailError);
-      return NextResponse.json(
-        { message: `Email sending failed: ${emailError.message}` },
-        { status: 500 }
-      );
-    }
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Message sent: %s', info.messageId);
+    
+    return NextResponse.json({ 
+      message: 'Order placed successfully',
+      orderId: info.messageId 
+    });
 
   } catch (error: any) {
     console.error('Server error:', error);
