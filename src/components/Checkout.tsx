@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useCart } from "@/contexts/CartContext";
+// import { useCart } from "@/contexts/CartContext";
 import * as yup from "yup";
 import { ValidationError } from "yup";
 
@@ -42,7 +42,7 @@ const checkoutSchema = yup.object().shape({
 });
 
 const CheckoutForm = ({ isOpen, onClose }: CheckoutFormProps) => {
-  const { cartItems, setCustomerInfo, clearCart } = useCart();
+  // const { cartItems, setCustomerInfo, clearCart } = useCart();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -78,15 +78,15 @@ const CheckoutForm = ({ isOpen, onClose }: CheckoutFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Cart Items:', cartItems); // Debug log
+    // console.log('Cart Items:', cartItems); // Debug log
     setIsSubmitting(true);
     setError("");
 
-    if (cartItems.length === 0) {
-      console.log('Cart is empty!'); // Debug log
-      setIsSubmitting(false);
-      return;
-    }
+    // if (cartItems.length === 0) {
+    //   console.log('Cart is empty!'); // Debug log
+    //   setIsSubmitting(false);
+    //   return;
+    // }
 
     try {
       // Validate all fields
@@ -99,7 +99,7 @@ const CheckoutForm = ({ isOpen, onClose }: CheckoutFormProps) => {
         },
         body: JSON.stringify({
           customerInfo: formData,
-          orderItems: cartItems,
+          // orderItems: cartItems,
         }),
       });
 
@@ -110,8 +110,8 @@ const CheckoutForm = ({ isOpen, onClose }: CheckoutFormProps) => {
       }
 
       // Success
-      setCustomerInfo(formData);
-      clearCart();
+      // setCustomerInfo(formData);
+      // clearCart();
       onClose();
       alert(
         "Order placed successfully! You will receive a confirmation email shortly."
@@ -148,7 +148,9 @@ const CheckoutForm = ({ isOpen, onClose }: CheckoutFormProps) => {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <h4 className="text-md text-black font-semibold mb-3">Pour acheter ces articles, veuillez remplir ce formulaire ci-dessous !</h4>
+        <h4 className="text-md text-black font-semibold mb-3">
+          Pour acheter ces articles, veuillez remplir ce formulaire ci-dessous !
+        </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-900 text-[13px] font-semibold mb-1">
