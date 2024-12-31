@@ -120,7 +120,7 @@ const ProductPage = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to place order");
+        toast.error("Failed to place order!");
       }
 
       toast.success("L’achat a été couronné de succès!");
