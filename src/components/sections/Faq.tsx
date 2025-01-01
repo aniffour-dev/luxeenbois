@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Image from "next/image";
-import FaqImg from "../../../public/galleries/1.jpg";
+import FaqImg from "../../../public/galleries/3.jpg";
 
 interface FAQItem {
   question: string;
@@ -11,34 +11,34 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "How to create an account?",
+    question: "Combien de chaussures ce porte-chaussures peut-il contenir?",
     answer:
-      "To create an account, find the 'Sign up' or 'Create account' button, fill out the registration form with your personal information, and click 'Create account' or 'Sign up.' Verify your email address if needed, and then log in to start using the platform.",
+      "Le porte-chaussures peut contenir environ 35 à 40 paires de chaussures.",
   },
   {
-    question: "Have any trust issue?",
+    question: "Est-ce difficile à assembler?",
     answer:
-      "Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence, and achieve your content marketing goals with ease.",
+      "Non, il est très facile à assembler avec des instructions incluses.",
   },
   {
-    question: "How can I reset my password?",
+    question: "De quels matériaux est fait le porte-chaussures?",
     answer:
-      "Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence, and achieve your content marketing goals with ease.",
+      "Le porte-chaussures est fait de MDF durable pour la force et la qualité.",
   },
   {
-    question: "What is the payment process?",
+    question: "Quelles sont les dimensions de ce produit?",
     answer:
-      "Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence, and achieve your content marketing goals with ease.",
+      "Les dimensions sont: Diamètre: ( 60 cm ), Hauteur: ( 160 cm ). Il est très facile à assembler et très solide.",
   },
   {
-    question: "What is the payment process?",
+    question: "Puis-je payer ma commande à la livraison ?",
     answer:
-      "Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence, and achieve your content marketing goals with ease.",
+      "Oui, nous proposons l'option de paiement à la livraison (Cash on Delivery - COD) pour votre commodité. Vous pouvez régler votre commande directement auprès du livreur à la réception.",
   },
   {
-    question: "What is the payment process?",
+    question: "Livrez-vous dans tout le Maroc ?",
     answer:
-      "Our focus on providing robust and user-friendly content management capabilities ensures that you can manage your content with confidence, and achieve your content marketing goals with ease.",
+      "Absolument ! Nous assurons la livraison dans toutes les régions du Maroc, afin que vous puissiez profiter de nos produits où que vous soyez.",
   },
 ];
 
@@ -86,9 +86,9 @@ const FAQ: React.FC = () => {
                       className="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600"
                       onClick={() => toggleAccordion(index)}
                     >
-                      <h5 className="text-black text-lg font-semibold">
+                      <h6 className="text-black text-[16px] font-semibold">
                         {faq.question}
-                      </h5>
+                      </h6>
                       {activeIndex === index ? (
                         <FaChevronUp className="text-indigo-600" />
                       ) : (

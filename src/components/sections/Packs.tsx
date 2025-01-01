@@ -1,85 +1,58 @@
-// import React from "react";
+import React from "react";
+import Image from "next/image";
+import { FaStar } from "react-icons/fa";
+import reviews from "@/data/reviews.json"; // Adjust the path based on your directory structure
 
-// type Review = {
-//     name: string;
-//     rating: number;
-//     text: string;
-//     image: string;
-// };
-
-// const reviews: Review[] = [
-//     {
-//         name: "Maria",
-//         rating: 5,
-//         text: "Les meilleures Meuble que j'ai jamais eues de votre part. Excellente qualité et meilleur traitement 💯",
-//         image: "https://placehold.co/300x400?text=Image+1"
-//     },
-//     {
-//         name: "Aicha",
-//         rating: 5,
-//         text: "",
-//         image: "https://placehold.co/300x400?text=Image+2"
-//     },
-//     {
-//         name: "Ahmed",
-//         rating: 4,
-//         text: "Honnêtement, bonne qualité et Zawina",
-//         image: "https://placehold.co/300x400?text=Image+3"
-//     }
-// ];
-
-// const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
-//     const stars = [];
-//     for (let i = 0; i < 5; i++) {
-//         if (i < rating) {
-//             stars.push(<i key={i} className="fas fa-star text-yellow-500"></i>);
-//         } else {
-//             stars.push(<i key={i} className="far fa-star text-yellow-500"></i>);
-//         }
-//     }
-//     return <div className="flex">{stars}</div>;
-// };
-
-// const ReviewCard: React.FC<{ review: Review }> = ({ review }) => (
-//     <div className="bg-white shadow-md rounded-lg overflow-hidden mb-6">
-//         <img src={review.image} alt={`Review by ${review.name}`} className="w-full h-64 object-cover" />
-//         <div className="p-4">
-//             <h3 className="text-center font-bold text-lg">{review.name}</h3>
-//             <div className="flex justify-center my-2">
-//                 <StarRating rating={review.rating} />
-//             </div>
-//             <p className="text-center text-gray-700">{review.text}</p>
-//         </div>
-//     </div>
-// );
-
-// const Packs = () => {
-//   return (
-//     <div className="bg-white shadow-md rounded-lg overflow-hidden mb-6">
-//       <img
-//         src={review.image}
-//         alt={`Review by ${review.name}`}
-//         className="w-full h-64 object-cover"
-//       />
-//       <div className="p-4">
-//         <h3 className="text-center font-bold text-lg">{review.name}</h3>
-//         <div className="flex justify-center my-2">
-//           <StarRating rating={review.rating} />
-//         </div>
-//         <p className="text-center text-gray-700">{review.text}</p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Packs;
-
-import React from 'react'
-
-const Packs = () => {
-  return (
-    <div>Packs</div>
-  )
+interface Review {
+  name: string;
+  review: string;
+  rating: number;
+  image: string; // This is the path to the image
 }
 
-export default Packs
+const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
+  const stars = Array.from({ length: rating }, (_, index) => (
+    <FaStar key={index} className="text-amber-400 size-5" />
+  ));
+  return <div className="flex justify-center items-center gap-1 mb-4">{stars}</div>;
+};
+
+const Card: React.FC<Review> = ({ name, review, rating, image }) => {
+  return (
+    <div className="break-inside-avoid bg-white shadow-md overflow-hidden">
+      <Image
+        src={image}
+        alt="Product"
+        width={400}
+        height={280}
+        objectFit="cover"
+        className="w-full h-auto"
+      />
+      <div className="p-3">
+        <h4 className="text-center text-black font-semibold text-md my-4">{name}</h4>
+        <StarRating rating={rating} />
+        <p className="text-sm text-slate-600 text-center font-medium">{review}</p>
+      </div>
+    </div>
+  );
+};
+
+const Packs: React.FC = () => {
+  return (
+    <div className="max-w-6xl mx-auto mb-16 px-6 lg:px-0 border-b-[1px] pb-10 border-slate-200">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {reviews.map((review, index) => (
+          <Card
+            key={index}
+            name={review.name}
+            review={review.review}
+            rating={review.rating}
+            image={review.image}
+          />
+        ))}
+      </section>
+    </div>
+  );
+};
+
+export default Packs;

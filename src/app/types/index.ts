@@ -12,6 +12,7 @@ export interface CustomerInfo {
   email: string;
   phone: string;
   address: string;
+  city: string;
 }
 
 export interface OrderData {

@@ -8,6 +8,9 @@ const GOOGLE_SHEETS_CLIENT_EMAIL = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
 const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
 
 interface OrderItem {
+  totalPrice: any;
+  displayPrice: any;
+  isSpecialOffer: any;
   productName: string;
   color: string;
   quantity: number;
@@ -19,12 +22,13 @@ interface CustomerInfo {
   email: string;
   phone: string;
   address: string;
+  city: string;
 }
 
 // Function to format date as DD/MM/YYYY
 function formatDate(date: Date): string {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 }
@@ -51,16 +55,18 @@ async function appendToGoogleSheet(orderData: any) {
     resource: {
       values: [
         [
-          formatDate(new Date()), // Formatted Timestamp
+          formatDate(new Date()),
           orderData.name,
           orderData.email,
           orderData.phone,
+          orderData.city,
           orderData.address,
           orderData.orderItems.map((item: any) => `${item.productName} (x${item.quantity})`).join(", "),
           orderData.orderItems.map((item: any) => item.color).join(", "),
           orderData.orderItems.map((item: any) => item.quantity).join(", "),
-          orderData.orderItems.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0), // Total Price
-          "Pending", // Order Status - Ensure this matches one of the dropdown options
+          orderData.orderItems[0].isSpecialOffer ? '3200 DHs (Offer)' : 
+            `${orderData.orderItems[0].totalPrice} DHs`,
+          "Pending",
         ],
       ],
     },
@@ -77,7 +83,11 @@ async function appendToGoogleSheet(orderData: any) {
 
 export async function POST(request: Request) {
   try {
-    const { customerInfo, orderItems }: { customerInfo: CustomerInfo; orderItems: OrderItem[] } = await request.json();
+    const {
+      customerInfo,
+      orderItems,
+    }: { customerInfo: CustomerInfo; orderItems: OrderItem[] } =
+      await request.json();
 
     // Send email to the admin
     const transporter = nodemailer.createTransport({
@@ -95,37 +105,40 @@ export async function POST(request: Request) {
 
     const mailOptions = {
       from: {
-        name: "Your Store Name",
+        name: "Luxe En Bois",
         address: process.env.SMTP_USER as string,
       },
       to: process.env.ADMIN_EMAIL,
       subject: "New Order Received",
       html: `
-        <h2>New Order Details</h2>
-        <h3>Customer Information:</h3>
-        <p>
-          Name: ${customerInfo.name}<br>
-          Email: ${customerInfo.email}<br>
-          Phone: ${customerInfo.phone}<br>
-          Address: ${customerInfo.address}
-        </p>
-        <h3>Order Items:</h3>
-        ${orderItems
-          .map(
-            (item) => `
-            <div style="margin-bottom: 10px;">
-              <p>
-                Product: ${item.productName}<br>
-                Color: ${item.color}<br>
-                Quantity: ${item.quantity}<br>
-                Price: ${item.price} MAD
-              </p>
-            </div>
-          `
-          )
-          .join("")}
-        <h3>Total Amount: ${orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0)} MAD</h3>
-      `,
+    <h2>New Order Details</h2>
+    <h3>Customer Information:</h3>
+    <p>
+      Name: ${customerInfo.name}<br>
+      Email: ${customerInfo.email}<br>
+      Phone: ${customerInfo.phone}<br>
+      Address: ${customerInfo.address}
+      City: ${customerInfo.city}
+    </p>
+    <h3>Order Items:</h3>
+    ${orderItems
+      .map(
+        (item) => `
+        <div style="margin-bottom: 10px;">
+          <p>
+            Product: ${item.productName}<br>
+            Color: ${item.color}<br>
+            Quantity: ${item.quantity}<br>
+            ${item.isSpecialOffer 
+              ? `Total: 3200 DHs (Offer)` 
+              : `Price per unit: ${item.price} DHs<br>Total: ${item.totalPrice} DHs`}
+          </p>
+        </div>
+      `
+      )
+      .join("")}
+    <h3>Total Amount: ${orderItems[0].isSpecialOffer ? '3200 DHs (Offer)' : `${orderItems[0].totalPrice} DHs`}</h3>
+  `,
     };
 
     // Send the email
@@ -137,6 +150,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Order placed successfully!" });
   } catch (error) {
     console.error("Error processing order:", error);
-    return NextResponse.json({ message: "Failed to process the order." }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to process the order." },
+      { status: 500 }
+    );
   }
 }

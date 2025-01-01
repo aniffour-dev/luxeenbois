@@ -7,7 +7,7 @@ const About = () => {
         À propos de cet produit
       </h2>
       <p className="text-slate-900 font-medium mb-2.5 text-sm">
-        Présentation du Weinstein Storage Rotating Shoe Rack - la solution
+        Présentation du LuxeEnBois Rotating Shoe Rack - la solution
         ultime pour organiser votre collection de chaussures. Avec son design
         rotatif 360°, ce porte-chaussures permet un accès facile à toutes vos
         paires de chaussures préférées. Dites adieu aux placards en désordre et
@@ -15,8 +15,7 @@ const About = () => {
         solution de rangement pratique et efficace. Avec 7 niveaux et la
         possibilité de contenir plus de 35 paires de chaussures, vous n'aurez
         plus jamais à vous soucier de trouver suffisamment d'espace pour vos
-        chaussures. La fonction rotative Susan paresseuse vous permet de trouver
-        sans effort la paire de chaussures exacte que vous recherchez.
+        chaussures.
       </p>
       <p className="text-slate-900 font-medium mb-2.5 text-sm">
         Plus besoin de fouiller dans les piles ou de chercher vos talons ou
@@ -25,14 +24,14 @@ const About = () => {
         haute qualité, notre porte-chaussures est non seulement durable, mais
         aussi élégant. Son design élégant et sa couleur neutre en font un ajout
         parfait à tout décor. Que vous ayez un petit appartement ou un placard
-        spacieux, le Weinstein Storage Rotating Shoe Rack vous aidera à
+        spacieux, le LuxeEnBois Rotating Shoe Rack vous aidera à
         maximiser votre espace.
       </p>
       <p className="text-slate-900 font-medium mb-2.5 text-sm">
         Plus d'encombrement ou de temps perdu à chercher vos chaussures - notre
         porte-chaussures gardera votre collection organisée et facilement
         accessible. Ne laissez pas vos chaussures prendre le contrôle de votre
-        maison. Investissez dans le Weinstein Storage Rotating Shoe Rack et
+        maison. Investissez dans le LuxeEnBois Rotating Shoe Rack et
         vivez la joie d'un espace bien rangé et bien organisé. Dites adieu au
         chaos des chaussures et bonjour au rangement des chaussures sans effort.
       </p>
