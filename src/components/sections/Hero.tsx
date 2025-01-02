@@ -664,14 +664,14 @@ const ProductPage = () => {
               alt="Product"
               width={0}
               height={0}
-              className="w-[70%] mb-5"
+              className="w-full lg:w-[70%] mb-5"
             />
             <Image
               src={Table}
               alt="Product"
               width={0}
               height={0}
-              className="w-[70%]"
+              className="w-full lg:w-[70%]"
             />
           </section>
           <Countdown />

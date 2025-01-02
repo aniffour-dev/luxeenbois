@@ -50,7 +50,7 @@ const FAQ: React.FC = () => {
   };
 
   return (
-    <section className="mb-16">
+    <section className="mb-16 px-5 lg:px-0">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col justify-center items-center gap-x-8 gap-y-5 xl:gap-16 lg:flex-row lg:justify-between max-lg:max-w-2xl mx-auto max-w-full">
           <div className="w-full lg:w-1/2">
@@ -86,7 +86,7 @@ const FAQ: React.FC = () => {
                       className="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600"
                       onClick={() => toggleAccordion(index)}
                     >
-                      <h6 className="text-black text-[16px] font-semibold">
+                      <h6 className="text-black text-sm lg:text-[16px] font-semibold">
                         {faq.question}
                       </h6>
                       {activeIndex === index ? (

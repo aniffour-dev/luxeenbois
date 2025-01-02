@@ -43,7 +43,7 @@ const Countdown: React.FC = () => {
       <div className="h-1 bg-slate-200 w-full mb-2"></div>
       <div className="flex flex-col items-center justify-center">
         <div className="text-center">
-          <div className="mt-4 text-violet-50 text-2xl flex justify-between items-center gap-10">
+          <div className="mt-4 text-violet-50 text-2xl flex justify-between items-center gap-4 lg:gap-10">
             <span className="rounded-xl h-10 w-10 text-black uppercase flex justify-center items-center font-black text-2xl">
               {String(days).padStart(2, "0")}d
             </span>

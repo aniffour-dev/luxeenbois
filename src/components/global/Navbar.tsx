@@ -22,9 +22,9 @@ const Header = () => {
 
   return (
     <>
-      <div className="bg-amber-500 py-2 text-white font-semibold flex justify-center items-center flex-col lg:flex-row gap-1 px-4 lg:px-0">
-        <span className="font-bold text-white">Special Offer🎉:</span>
-        <span className="text-white">
+      <div className="bg-amber-500 py-2 text-white font-semibold flex justify-center items-center flex-col lg:flex-row gap-1 px-2 lg:px-0">
+        <span className="font-bold text-white text-sm lg:text-md">Special Offer🎉:</span>
+        <span className="text-white text-sm lg:text-md">
           Achetez 2 pour 3200dhs – Économisez 560dhs!
         </span>
       </div>
